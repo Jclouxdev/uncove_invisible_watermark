@@ -1,3 +1,4 @@
+import time
 from optparse import OptionParser
 from .blind_watermark import WaterMark
 
@@ -24,11 +25,17 @@ def main():
             print(usage1)
             return
         else:
+            startTimer = time.time()
             bwm1.read_img(args[0])
             bwm1.read_wm(args[1], mode='str')
             bwm1.embed(args[2])
+            endTimer = time.time()
+            execTime = endTimer - startTimer
             print('Embed succeed! to file ', args[2])
+            print('Executed in ', round(execTime, 2), 's')
+            print('- - - - - - - - - - - - - - - - - - - - - - -')
             print('Put down watermark size:', len(bwm1.wm_bit))
+            print('- - - - - - - - - - - - - - - - - - - - - - -')
 
     if opts.work_mode == 'extract':
         if not len(args) == 1:
